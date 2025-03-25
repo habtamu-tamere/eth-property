@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EthioProperties | Find or List Properties in Ethiopia</title>
-    <meta name="description" content="Ethiopia's premier real estate platform connecting buyers, renters, and agents. Find your dream home or list your property today for rent or sale.">
+    <meta name="description" content="Ethiopia's premier real estate platform connecting buyers, renters, and agents. Find your dream home or list your property today.">
     
     <!-- Open Graph / Facebook Meta Tags -->
     <meta property="og:type" content="website">
@@ -19,7 +19,7 @@
     <meta name="twitter:title" content="EthioProperties | Ethiopian Real Estate Marketplace">
     <meta name="twitter:description" content="Find or list properties in Ethiopia - the easiest way to buy, rent, or sell real estate in Addis Ababa and beyond.">
     <meta name="twitter:image" content="https://ethioproperties.com/images/social-share.jpg">
- 
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Firebase SDK -->
@@ -168,6 +168,61 @@
         .telegram-bg {
             background-color: #0088cc;
         }
+        /* Property listings */
+        .property-card {
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .property-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .property-img {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+        
+        .property-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1;
+        }
+        
+        .property-price {
+            font-weight: bold;
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+        
+        .property-features {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        
+        .property-features span {
+            display: flex;
+            align-items: center;
+        }
+        
+        .property-features i {
+            margin-right: 5px;
+            color: var(--accent);
+        }
+        
+        /* Search filters */
+        .search-filters {
+            background-color: var(--light);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
         
         @media (max-width: 768px) {
             .hero {
@@ -251,6 +306,69 @@
             <a href="#" class="social-share-btn telegram-bg" onclick="shareOnTelegram()">
                 <i class="fab fa-telegram-plane"></i>
             </a>
+        </div>
+    </div>
+</section>
+
+ <!-- Property Listings Section -->
+ <section id="listings" class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Featured Properties</h2>
+            <p class="lead">Find your perfect home in Ethiopia</p>
+        </div>
+        
+        <!-- Search Filters -->
+        <div class="search-filters">
+            <form id="searchForm" class="row g-3">
+                <div class="col-md-3">
+                    <select class="form-select" id="propertyType">
+                        <option value="" selected>All Types</option>
+                        <option value="apartment">Apartment</option>
+                        <option value="house">House</option>
+                        <option value="villa">Villa</option>
+                        <option value="land">Land</option>
+                        <option value="commercial">Commercial</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select" id="citySelect">
+                        <option value="" selected>All Cities</option>
+                        <option value="addis-ababa">Addis Ababa</option>
+                        <option value="bahir-dar">Bahir Dar</option>
+                        <option value="awassa">Awassa</option>
+                        <option value="dire-dawa">Dire Dawa</option>
+                        <option value="mekelle">Mekelle</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select" id="priceRange">
+                        <option value="" selected>Any Price</option>
+                        <option value="0-5000000">Under 5M ETB</option>
+                        <option value="5000000-10000000">5M - 10M ETB</option>
+                        <option value="10000000-20000000">10M - 20M ETB</option>
+                        <option value="20000000">20M+ ETB</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary w-100">Search</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Property Listings Grid -->
+        <div class="row" id="propertyListings">
+            <!-- Properties will be loaded here dynamically -->
+            <div class="col-12 text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- View More Button -->
+        <div class="text-center mt-4">
+            <button id="loadMoreBtn" class="btn btn-outline-primary" style="display: none;">Load More Properties</button>
         </div>
     </div>
 </section>
@@ -473,7 +591,7 @@
                     <i class="fab fa-telegram-plane"></i>
                 </a>
             </div>
-            <p class="mb-2">&copy; 2025 EthioProperties. All rights reserved. 0962109562</p>
+            <p class="mb-2">&copy; 2025 EthioProperties. All rights reserved.</p>
             <p class="small">The future of real estate in Ethiopia starts here.</p>
         </div>
     </footer>
@@ -512,8 +630,119 @@
             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.9/js/utils.js"
         });
 
-                // Social Sharing Functions
-                function shareOnFacebook() {
+
+
+                // Function to display properties
+                function displayProperties(properties) {
+            const listingsContainer = document.getElementById('propertyListings');
+            listingsContainer.innerHTML = '';
+            
+            if (properties.length === 0) {
+                listingsContainer.innerHTML = '<div class="col-12 text-center"><p>No properties found matching your criteria.</p></div>';
+                return;
+            }
+            
+            properties.forEach(property => {
+                const propertyCard = document.createElement('div');
+                propertyCard.className = 'col-md-4';
+                propertyCard.innerHTML = `
+                    <div class="property-card card h-100">
+                        <div class="position-relative">
+                            <img src="${property.image}" class="property-img" alt="${property.title}">
+                            <span class="property-badge badge bg-${property.featured ? 'danger' : 'primary'}">
+                                ${property.featured ? 'Featured' : 'For ' + (property.type === 'land' ? 'Sale' : (property.type === 'commercial' ? 'Lease' : 'Rent'))}
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">${property.title}</h5>
+                            <p class="card-text text-muted">${property.city.replace('-', ' ').toUpperCase()}</p>
+                            <p class="property-price">${formatPrice(property.price)} ETB</p>
+                            
+                            <div class="property-features">
+                                ${property.bedrooms ? `<span><i class="fas fa-bed"></i> ${property.bedrooms} Bed</span>` : ''}
+                                ${property.bathrooms ? `<span><i class="fas fa-bath"></i> ${property.bathrooms} Bath</span>` : ''}
+                                <span><i class="fas fa-vector-square"></i> ${property.area} sqm</span>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white border-0">
+                            <button class="btn btn-primary w-100" onclick="showPropertyDetails('${property.id}')">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                `;
+                listingsContainer.appendChild(propertyCard);
+            });
+            
+            // Show load more button if we have more properties
+            document.getElementById('loadMoreBtn').style.display = properties.length >= 5 ? 'inline-block' : 'none';
+        }
+
+        // Format price with commas
+        function formatPrice(price) {
+            return new Intl.NumberFormat('en-ET').format(price);
+        }
+
+        // Filter properties based on search criteria
+        function filterProperties() {
+            const typeFilter = document.getElementById('propertyType').value;
+            const cityFilter = document.getElementById('citySelect').value;
+            const priceFilter = document.getElementById('priceRange').value;
+            
+            let filtered = sampleProperties;
+            
+            if (typeFilter) {
+                filtered = filtered.filter(p => p.type === typeFilter);
+            }
+            
+            if (cityFilter) {
+                filtered = filtered.filter(p => p.city === cityFilter);
+            }
+            
+            if (priceFilter) {
+                const [min, max] = priceFilter.split('-').map(Number);
+                if (max) {
+                    filtered = filtered.filter(p => p.price >= min && p.price <= max);
+                } else {
+                    filtered = filtered.filter(p => p.price >= min);
+                }
+            }
+            
+            displayProperties(filtered);
+        }
+
+        // Show property details (would be a modal in a real implementation)
+        function showPropertyDetails(propertyId) {
+            const property = sampleProperties.find(p => p.id === propertyId);
+            if (property) {
+                alert(`Showing details for: ${property.title}\nPrice: ${formatPrice(property.price)} ETB\nLocation: ${property.city.replace('-', ' ').toUpperCase()}`);
+            }
+        }
+
+        // Load more properties
+        document.getElementById('loadMoreBtn').addEventListener('click', function() {
+            // In a real app, this would fetch more properties from Firebase
+            alert('Loading more properties...');
+        });
+
+        // Search form submission
+        document.getElementById('searchForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            filterProperties();
+        });
+
+        // Initial load of properties
+        window.addEventListener('DOMContentLoaded', function() {
+            // Simulate loading from Firebase
+            setTimeout(() => {
+                displayProperties(sampleProperties);
+            }, 1000);
+        });
+
+
+
+        // Social Sharing Functions
+        function shareOnFacebook() {
             const url = encodeURIComponent(window.location.href);
             const text = encodeURIComponent("Check out EthioProperties - Ethiopia's premier real estate platform!");
             window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`, '_blank', 'width=600,height=400');
@@ -646,7 +875,6 @@
                 document.getElementById('buyerCount').textContent = 70+buyers + '+';
                 document.getElementById('agentCount').textContent = 15+agents + '+';
                 document.getElementById('listingCount').textContent = Math.floor(agents * 1.2) + '+'; // Estimated listings
-
             });
         }
         
