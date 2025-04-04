@@ -2,19 +2,8 @@
         const toastEl = document.getElementById('toast');
         const toast = new bootstrap.Toast(toastEl, { autohide: true, delay: 5000 });
 
-        // Initialize international telephone input
-        const phoneInput = document.querySelector("#phoneInput");
-        const iti = window.intlTelInput(phoneInput, {
-            initialCountry: "et", // Ethiopia as default
-            separateDialCode: true,
-            preferredCountries: ["et", "us", "gb", "ca", "ae"], // Ethiopia first, then common diaspora countries
-            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.9/js/utils.js"
-        });
-
-
-
-                // Function to display properties
-                function displayProperties(properties) {
+         // Function to display properties
+               function displayProperties(properties) {
             const listingsContainer = document.getElementById('propertyListings');
             listingsContainer.innerHTML = '';
             
@@ -158,106 +147,155 @@
             window.open(`https://t.me/share/url?url=${url}&text=${text}`, '_blank', 'width=600,height=400');
         }
 
-        // Form submission handler
-        document.getElementById('registrationForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Validate phone number
-            if (!iti.isValidNumber()) {
-                document.getElementById('toast-message').textContent = 'Please enter a valid phone number';
-                toastEl.classList.remove('bg-success');
-                toastEl.classList.add('bg-danger');
-                toast.show();
-                return;
-            }
-            
-            // Get form values
-            const name = document.getElementById('nameInput').value;
-            const email = document.getElementById('emailInput').value;
-            const phoneNumber = iti.getNumber(); // Gets full international number
-            const userType = document.getElementById('userTypeInput').value;
-            const timestamp = new Date().toISOString();
-            
-            // Show loading state
-            const submitBtn = document.getElementById('submitBtn');
-            const submitText = document.getElementById('submitText');
-            const spinner = submitBtn.querySelector('.spinner-border');
-            
-            submitText.textContent = 'Processing...';
-            spinner.style.display = 'inline-block';
-            submitBtn.disabled = true;
-            
-            // Save to Firebase
-            const newUserRef = database.ref('earlyAccessUsers').push();
-            newUserRef.set({
-                name: name,
-                email: email,
-                phone: phoneNumber,
-                userType: userType,
-                timestamp: timestamp,
-                countryCode: iti.getSelectedCountryData().iso2
-            })
-            .then(() => {
-                // Show success message
-                document.getElementById('successMessage').style.display = 'block';
-                
-                // Show toast notification
-                document.getElementById('toast-message').textContent = 'Registration successful!';
-                toastEl.classList.remove('bg-danger');
-                toastEl.classList.add('bg-success');
-                toast.show();
-                
-                // Update counters
-                updateCounters();
-                
-                // Reset form
-                document.getElementById('registrationForm').reset();
-                iti.setNumber(""); // Reset phone input
-            })
-            .catch((error) => {
-                // Show error message
-                document.getElementById('toast-message').textContent = 'Error: ' + error.message;
-                toastEl.classList.remove('bg-success');
-                toastEl.classList.add('bg-danger');
-                toast.show();
-            })
-            .finally(() => {
-                // Reset button state
-                submitText.textContent = 'Get Early Access';
-                spinner.style.display = 'none';
-                submitBtn.disabled = false;
-            });
-        });
+
         
         // Function to update counters
         function updateCounters() {
-            database.ref('earlyAccessUsers').once('value').then((snapshot) => {
-                const users = snapshot.val() || {};
-                const userCount = Object.keys(users).length;
                 
                 // Count user types
                 let buyers = 0;
                 let agents = 0;
                 let diaspora = 0;
                 
-                Object.values(users).forEach(user => {
-                    if (user.userType === 'buyer') buyers++;
-                    if (user.userType === 'agent') agents++;
-                    if (user.userType === 'diaspora') diaspora++;
-                    
-                    // Count diaspora by country code (non-ET)
-                    if (user.countryCode && user.countryCode !== 'et') {
-                        diaspora++;
-                    }
-                });
-                
                 // Update UI
                 document.getElementById('userCount').textContent = 50+userCount + '+';
                 document.getElementById('buyerCount').textContent = 70+buyers + '+';
                 document.getElementById('agentCount').textContent = 15+agents + '+';
                 document.getElementById('listingCount').textContent = Math.floor(agents * 1.2) + '+'; // Estimated listings
-            });
-        }
+          }
         
         // Initialize counters on page load
         updateCounters();
+
+
+
+
+
+
+
+
+
+// DOM Elements
+const burger = document.querySelector('.burger');
+const navLinks = document.querySelector('.nav-links');
+const loginBtn = document.getElementById('login-btn');
+const signupBtn = document.getElementById('signup-btn');
+const postPropertyBtn = document.getElementById('post-property-btn');
+const loginModal = document.getElementById('login-modal');
+const signupModal = document.getElementById('signup-modal');
+const closeModals = document.querySelectorAll('.close-modal');
+const showSignup = document.getElementById('show-signup');
+const showLogin = document.getElementById('show-login');
+const loginForm = document.getElementById('login-form');
+const signupForm = document.getElementById('signup-form');
+const notificationToast = document.getElementById('notification-toast');
+const toastMessage = document.getElementById('toast-message');
+
+// Toggle mobile menu
+burger.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+    burger.classList.toggle('toggle');
+});
+
+// Show login modal
+loginBtn.addEventListener('click', () => {
+    loginModal.classList.remove('hidden');
+    loginModal.classList.add('active');
+});
+
+// Show signup modal
+signupBtn.addEventListener('click', () => {
+    signupModal.classList.remove('hidden');
+    signupModal.classList.add('active');
+});
+
+// Post property button
+postPropertyBtn.addEventListener('click', () => {
+    // Check if user is logged in
+    if (currentUser) {
+        window.location.href = 'post-property.html';
+    } else {
+        showNotification('Please login to post a property', 'warning');
+        loginModal.classList.remove('hidden');
+        loginModal.classList.add('active');
+    }
+});
+
+// Close modals
+closeModals.forEach(btn => {
+    btn.addEventListener('click', () => {
+        loginModal.classList.remove('active');
+        loginModal.classList.add('hidden');
+        signupModal.classList.remove('active');
+        signupModal.classList.add('hidden');
+    });
+});
+
+// Switch between login and signup modals
+showSignup.addEventListener('click', (e) => {
+    e.preventDefault();
+    loginModal.classList.remove('active');
+    loginModal.classList.add('hidden');
+    signupModal.classList.remove('hidden');
+    signupModal.classList.add('active');
+});
+
+showLogin.addEventListener('click', (e) => {
+    e.preventDefault();
+    signupModal.classList.remove('active');
+    signupModal.classList.add('hidden');
+    loginModal.classList.remove('hidden');
+    loginModal.classList.add('active');
+});
+
+// Close modals when clicking outside
+window.addEventListener('click', (e) => {
+    if (e.target === loginModal) {
+        loginModal.classList.remove('active');
+        loginModal.classList.add('hidden');
+    }
+    if (e.target === signupModal) {
+        signupModal.classList.remove('active');
+        signupModal.classList.add('hidden');
+    }
+});
+
+// Show notification function
+function showNotification(message, type = 'info') {
+    toastMessage.textContent = message;
+    notificationToast.className = 'toast show ' + type;
+    
+    setTimeout(() => {
+        notificationToast.classList.remove('show');
+    }, 5000);
+}
+
+// Load featured properties
+document.addEventListener('DOMContentLoaded', () => {
+    loadFeaturedProperties();
+    
+    // Check if user is logged in
+    if (currentUser) {
+        updateAuthUI();
+    }
+});
+
+// Update UI based on auth state
+function updateAuthUI() {
+    if (currentUser) {
+        document.getElementById('login-btn').style.display = 'none';
+        document.getElementById('signup-btn').style.display = 'none';
+        
+        // Create profile button
+        const profileBtn = document.createElement('button');
+        profileBtn.id = 'profile-btn';
+        profileBtn.innerHTML = `<i class="fas fa-user"></i> ${currentUser.displayName || 'Profile'}`;
+        profileBtn.addEventListener('click', () => {
+            window.location.href = 'dashboard.html';
+        });
+        
+        // Insert profile button
+        const authButtons = document.querySelector('.auth-buttons');
+        authButtons.insertBefore(profileBtn, postPropertyBtn);
+    }
+}
