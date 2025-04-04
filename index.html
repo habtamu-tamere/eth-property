@@ -22,17 +22,15 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+
     <!-- intl-tel-input CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.9/css/intlTelInput.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/adv.css">
     <link rel="stylesheet" href="css/cat.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
 <body>
-
-
 
     <!-- Toast Notification -->
     <div class="toast-container">
@@ -45,15 +43,6 @@
             </div>
         </div>
     </div>
-
-
-
-    <div class="language-switcher">
-        <button data-lang="en">English</button>
-        <button data-lang="am">አማርኛ</button>
-        <button data-lang="om">Afaan Oromoo</button>
-    </div>
-
 
             <!-- Banner Container -->
     <div class="banner-container">
@@ -135,65 +124,48 @@
     </div>
 
 
-        <!-- Navigation -->
-        <nav class="navbar">
-            <div class="logo">
-                <!-- <img src="assets/logo.png" alt="PropertyHab"> -->
-                <span>PropertyHab</span>
-            </div>
-            <div class="nav-links">
-                <a href="index.html" class="active" data-i18n="home">Home</a>
-                <!-- <a href="listings.html" data-i18n="listings">Listings</a> -->
-                <a href="#" data-i18n="agents">Agents</a>
-                <a href="profile.html" data-i18n="post_property">Post Property</a>
-                <a href="#" data-i18n="contact">Contact</a>
-            </div>
-            <div class="auth-buttons">
-                <a href="auth/login.html" class="btn btn-outline" data-i18n="login">Login</a>
-                <a href="auth/register.html" class="btn btn-primary" data-i18n="register">Register Early</a>
-            </div>
-            <div class="mobile-menu-btn">
-                <i class="fas fa-bars"></i>
-            </div>
-        </nav>
-    
-        <!-- Mobile Menu -->
-        <div class="mobile-menu collapse navbar-collapse">
-            <a href="index.html" class="active" data-i18n="home">Home</a>
-            <!-- <a href="listings.html" data-i18n="listings">Listings</a> -->
-            <a href="#" data-i18n="agents">Agents</a>
-            <a href="#" data-i18n="post_property">Post Property</a>
-            <a href="#" data-i18n="contact">Contact</a>
-            <div class="mobile-auth">
-                <a href="auth/login.html" class="btn btn-outline" data-i18n="login">Login</a>
-                <a href="auth/register.html" class="btn btn-primary" data-i18n="register">Register</a>
-            </div>
-        </div>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <button id="en-btn">English</button>
+        <button id="am-btn">አማርኛ</button>
+        <button id="or-btn">Afaan Oromoo</button>
+    </div>
 
-
-    
-    <!-- Navigation -->
-    <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand logo" href="#">Ethio<span>Properties</span></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#features">Features</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#how-it-works">How It Works</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">Get Access</a>
-                    </li>
-                </ul>
-            </div>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html">EthioProperties</a>
         </div>
-    </nav> -->
+        <ul class="nav-links">
+            <li><a href="buy.html" data-i18n="buy">Buy</a></li>
+            <li><a href="rent.html" data-i18n="rent">Rent</a></li>
+            <li><a href="shortlet.html" data-i18n="shortlet">Shortlet</a></li>
+            <li><a href="new-projects.html" data-i18n="new_projects">New Projects</a></li>
+            <li><a href="services.html" data-i18n="services">Services</a></li>
+            <li><a href="agents.html" data-i18n="agents">Agents</a></li>
+            <li><a href="area-guide.html" data-i18n="area_guide">Area Guide</a></li>
+            <li><a href="blogs.html" data-i18n="blogs">Blogs</a></li>
+        </ul>
+        <div class="auth-buttons">
+            <button id="login-btn" data-i18n="login">Login</button>
+            <button id="signup-btn" data-i18n="signup">Sign Up</button>
+            <button id="post-property-btn" data-i18n="post_property">+ Post Property</button>
+        </div>
+        <div class="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div>
+    </nav>
+
+<!-- Featured Properties -->
+    <section class="featured-properties">
+        <h2 data-i18n="featured_properties">Featured Properties</h2>
+        <div class="properties-grid" id="featured-properties">
+            <!-- Properties will be loaded dynamically -->
+        </div>
+    </section>
+
 
 <!-- Hero Section -->
 <section class="hero">
@@ -225,19 +197,7 @@
 </section>
 
 
-
-
-
-
-<div class="container">
-    <div class="language-switcher">
-        <button class="language-btn">
-            <i class="fas fa-globe"></i>
-            <span>English</span>
-            <i class="fas fa-chevron-down"></i>
-        </button>
-    </div>
-    
+   
     <header>
         <h1>Find Your Perfect Property</h1>
         <!-- <p>Browse properties by category in Addis Ababa</p> -->
@@ -534,6 +494,34 @@
     </div>
 </section>
 
+
+
+    <!-- Services Section -->
+    <section class="services">
+        <h2 data-i18n="our_services">Our Services</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <i class="fas fa-home"></i>
+                <h3 data-i18n="property_valuation">Property Valuation</h3>
+                <p data-i18n="property_valuation_desc">Get accurate valuation for your property</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-handshake"></i>
+                <h3 data-i18n="property_management">Property Management</h3>
+                <p data-i18n="property_management_desc">Professional management for your properties</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-file-contract"></i>
+                <h3 data-i18n="legal_services">Legal Services</h3>
+                <p data-i18n="legal_services_desc">Expert legal advice for all property matters</p>
+            </div>
+        </div>
+    </section>
+
+
+
+    
+
     <!-- Value Proposition -->
     <section id="features" class="py-5">
         <div class="container">
@@ -624,33 +612,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-8 text-center">
                     <h2 class="fw-bold mb-4">Be the first to use Ethiopia's easiest real estate platform!</h2>
-                    <p class="lead mb-5">Sign up now for exclusive early access and deals.</p>
-                    
-                    <form id="registrationForm" class="row g-3 justify-content-center">
-                        <div class="col-md-6">
-                            <input type="text" class="form-control form-control-lg" id="nameInput" placeholder="Your Name" required>
-                        </div>
-                        <div class="col-md-6">
-                            <input type="email" class="form-control form-control-lg" id="emailInput" placeholder="Email Address" required>
-                        </div>
-                        <div class="col-md-6">
-                            <input type="tel" class="form-control form-control-lg" id="phoneInput" placeholder="Phone Number" required>
-                        </div>
-                        <div class="col-md-6">
-                            <select class="form-select form-select-lg" id="userTypeInput" required>
-                                <option value="" selected disabled>I am a...</option>
-                                <option value="buyer">Buyer/Renter</option>
-                                <option value="agent">Agent/Owner</option>
-                                <option value="diaspora">Diaspora Investor</option>
-                            </select>
-                        </div>
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-light btn-lg px-5" id="submitBtn">
-                                <span id="submitText">Get Early Access</span>
-                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                            </button>
-                        </div>
-                    </form>
+                    <p class="lead mb-5">Sign up now for exclusive early access and deals.</p>                   
                     
                     <div id="successMessage" class="alert alert-success mt-4" style="display: none;">
                         Thank you for registering! We'll contact you soon with more details.
@@ -752,32 +714,109 @@
                     <i class="fab fa-telegram-plane"></i>
                 </a>
             </div>
-            <p class="mb-2">&copy; 2025 EthioProperties. All rights reserved.</p>
+            <p class="mb-2">&copy; 2030 EthioProperties. All rights reserved.</p>
             <p class="small">The future of real estate in Ethiopia starts here.</p>
         </div>
     </footer>
-    <script src="js/advertisement.js"></script>
+
+
+
+
+    <!-- Notification Toast -->
+    <div id="notification-toast" class="toast hidden">
+        <span id="toast-message"></span>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 data-i18n="login">Login</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email" data-i18n="email">Email</label>
+                    <input type="email" id="login-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password" data-i18n="password">Password</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                <button type="submit" data-i18n="login">Login</button>
+            </form>
+            <p data-i18n="no_account">Don't have an account? <a href="#" id="show-signup">Sign up</a></p>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signup-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 data-i18n="signup">Sign Up</h2>
+            <form id="signup-form">
+                <div class="form-group">
+                    <label for="signup-name" data-i18n="full_name">Full Name</label>
+                    <input type="text" id="signup-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-email" data-i18n="email">Email</label>
+                    <input type="email" id="signup-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-phone" data-i18n="phone">Phone</label>
+                    <input type="tel" id="signup-phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password" data-i18n="password">Password</label>
+                    <input type="password" id="signup-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-confirm-password" data-i18n="confirm_password">Confirm Password</label>
+                    <input type="password" id="signup-confirm-password" required>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="signup-is-agent" data-i18n="i_am_agent">
+                        <span data-i18n="i_am_agent">I am a real estate agent/developer</span>
+                    </label>
+                </div>
+                <button type="submit" data-i18n="signup">Sign Up</button>
+            </form>
+            <p data-i18n="have_account">Already have an account? <a href="#" id="show-login">Login</a></p>
+        </div>
+    </div>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-storage-compat.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/property.js"></script>
     <script src="js/language.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/dummy-data.js"></script>    
+    <script src="js/advertisement.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- intl-tel-input JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.9/js/intlTelInput.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.9/js/utils.js"></script>
-    <script src="main.js"></script>
+
     <script>
         // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyAIED2vXkI_wNHEM5QpyGPkuMMOn0F4p5Q",
-            authDomain: "ethio-property-hub.firebaseapp.com",
-            projectId: "ethio-property-hub",
-            storageBucket: "ethio-property-hub.firebasestorage.app",
-            messagingSenderId: "898988888928",
-            appId: "1:898988888928:web:24ca6a7b9a198398304405",
-            measurementId: "G-WY4ENQZLXV"
-        };
+        // const firebaseConfig = {
+        //     apiKey: "AIzaSyAIED2vXkI_wNHEM5QpyGPkuMMOn0F4p5Q",
+        //     authDomain: "ethio-property-hub.firebaseapp.com",
+        //     projectId: "ethio-property-hub",
+        //     storageBucket: "ethio-property-hub.firebasestorage.app",
+        //     messagingSenderId: "898988888928",
+        //     appId: "1:898988888928:web:24ca6a7b9a198398304405",
+        //     measurementId: "G-WY4ENQZLXV"
+        // };
 
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
+        // // Initialize Firebase
+        // firebase.initializeApp(firebaseConfig);
+        // const database = firebase.database();
 
 
     </script>
