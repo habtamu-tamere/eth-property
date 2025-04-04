@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Property - EthioProperties</title>
+    <link rel="stylesheet" href="css/post-property.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- <link rel="stylesheet" href="css/responsive.css"> -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar (same as index.html) -->
+      <!-- Language Selector -->
+    <div class="language-selector">
+        <button id="en-btn">English</button>
+        <button id="am-btn">አማርኛ</button>
+        <button id="or-btn">Afaan Oromoo</button>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html">EthioProperties</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" data-i18n="buy">Buy</a></li>
+            <li><a href="index.html" data-i18n="rent">Rent</a></li>
+            <li><a href="#shortlet.html" data-i18n="shortlet">Shortlet</a></li>
+            <li><a href="#new-projects.html" data-i18n="new_projects">New Projects</a></li>
+            <li><a href="#services.html" data-i18n="services">Services</a></li>
+            <li><a href="#agents.html" data-i18n="agents">Agents</a></li>
+            <li><a href="#area-guide.html" data-i18n="area_guide">Area Guide</a></li>
+            <li><a href="#blogs.html" data-i18n="blogs">Blogs</a></li>
+        </ul>
+        <!-- <div class="auth-buttons">
+            <button id="login-btn" data-i18n="login">Login</button>
+            <button id="signup-btn" data-i18n="signup">Sign Up</button>
+            <button id="post-property-btn" data-i18n="post_property">+ Post Property</button>
+        </div>
+        <div class="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div> -->
+    </nav> 
+    
+    <!-- Post Property Form -->
+    <section class="post-property-form">
+        <div class="container">
+            <h2 data-i18n="post_property">Post Property</h2>
+            <form id="property-form">
+                <div class="form-section">
+                    <h3 data-i18n="basic_info">Basic Information</h3>
+                    <div class="form-group">
+                        <label for="property-title" data-i18n="property_title">Property Title*</label>
+                        <input type="text" id="property-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="property-description" data-i18n="description">Description*</label>
+                        <textarea id="property-description" rows="5" required></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="property-type" data-i18n="property_type">Property Type*</label>
+                            <select id="property-type" required>
+                                <option value="" data-i18n="select_type">Select Type</option>
+                                <option value="house" data-i18n="house">House</option>
+                                <option value="apartment" data-i18n="apartment">Apartment</option>
+                                <option value="villa" data-i18n="villa">Villa</option>
+                                <option value="land" data-i18n="land">Land</option>
+                                <option value="commercial" data-i18n="commercial">Commercial</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="listing-type" data-i18n="listing_type">Listing Type*</label>
+                            <select id="listing-type" required>
+                                <option value="" data-i18n="select_listing">Select Listing</option>
+                                <option value="sale" data-i18n="for_sale">For Sale</option>
+                                <option value="rent" data-i18n="for_rent">For Rent</option>
+                                <option value="shortlet" data-i18n="shortlet">Shortlet</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3 data-i18n="property_details">Property Details</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bedrooms" data-i18n="bedrooms">Bedrooms</label>
+                            <input type="number" id="bedrooms" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="bathrooms" data-i18n="bathrooms">Bathrooms</label>
+                            <input type="number" id="bathrooms" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="area" data-i18n="area">Area (sqm)*</label>
+                            <input type="number" id="area" min="0" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="features">Features</label>
+                        <div class="features-grid">
+                            <label><input type="checkbox" name="features" value="parking"> <span data-i18n="parking">Parking</span></label>
+                            <label><input type="checkbox" name="features" value="furnished"> <span data-i18n="furnished">Furnished</span></label>
+                            <label><input type="checkbox" name="features" value="garden"> <span data-i18n="garden">Garden</span></label>
+                            <label><input type="checkbox" name="features" value="security"> <span data-i18n="security">Security</span></label>
+                            <label><input type="checkbox" name="features" value="pool"> <span data-i18n="pool">Swimming Pool</span></label>
+                            <label><input type="checkbox" name="features" value="ac"> <span data-i18n="ac">Air Conditioning</span></label>
+                            <label><input type="checkbox" name="features" value="heating"> <span data-i18n="heating">Heating</span></label>
+                            <label><input type="checkbox" name="features" value="wifi"> <span data-i18n="wifi">WiFi</span></label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3 data-i18n="location_info">Location Information</h3>
+                    <div class="form-group">
+                        <label for="address" data-i18n="address">Address*</label>
+                        <input type="text" id="address" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city" data-i18n="city">City*</label>
+                            <input type="text" id="city" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subcity" data-i18n="subcity">Subcity/Zone*</label>
+                            <input type="text" id="subcity" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="location-description" data-i18n="location_desc">Location Description (landmarks, etc.)</label>
+                        <textarea id="location-description" rows="3"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3 data-i18n="price_info">Price Information</h3>
+                    <div class="form-group">
+                        <label for="price" data-i18n="price">Price*</label>
+                        <input type="number" id="price" min="0" required>
+                    </div>
+                    <div class="form-group" id="price-period-container" style="display: none;">
+                        <label for="price-period" data-i18n="price_period">Price Period</label>
+                        <select id="price-period">
+                            <option value="month" data-i18n="monthly">Monthly</option>
+                            <option value="week" data-i18n="weekly">Weekly</option>
+                            <option value="day" data-i18n="daily">Daily</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="negotiable" data-i18n="negotiable">Negotiable</label>
+                        <select id="negotiable">
+                            <option value="yes" data-i18n="yes">Yes</option>
+                            <option value="no" data-i18n="no">No</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3 data-i18n="property_images">Property Images*</h3>
+                    <div class="form-group">
+                        <div class="image-upload-container">
+                            <label class="image-upload-label" for="property-images">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span data-i18n="upload_images">Click to upload images</span>
+                                <input type="file" id="property-images" multiple accept="image/*" style="display: none;">
+                            </label>
+                            <div class="image-preview" id="image-preview"></div>
+                        </div>
+                        <p class="hint" data-i18n="image_hint">Upload at least 3 images (max 10). First image will be used as cover.</p>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3 data-i18n="contact_info">Contact Information</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="contact-name" data-i18n="contact_name">Contact Name*</label>
+                            <input type="text" id="contact-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-phone" data-i18n="contact_phone">Phone Number*</label>
+                            <input type="tel" id="contact-phone" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-email" data-i18n="contact_email">Email</label>
+                        <input type="email" id="contact-email">
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" id="preview-btn" data-i18n="preview">Preview</button>
+                    <button type="submit" id="submit-btn" data-i18n="submit_property">Submit Property</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    
+<!-- Add this to the payment modal section -->
+<div id="payment-modal" class="modal hidden">
+    <div class="modal-content payment-modal-content">
+        <span class="close-modal">&times;</span>
+        <h2 data-i18n="payment_required">Payment Required</h2>
+        <div class="payment-methods">
+            <h3 data-i18n="select_payment_method">Select Payment Method</h3>
+            <div class="payment-method-grid">
+                <button id="telebirr-btn" class="payment-method">
+                    <img src="images/telebirr-logo.png" alt="Telebirr">
+                    <span>Telebirr</span>
+                </button>
+                <button id="cbebirr-btn" class="payment-method">
+                    <img src="images/cbebirr-logo.png" alt="CBE Birr">
+                    <span>CBE Birr</span>
+                </button>
+            </div>
+        </div>
+        <div id="payment-options">
+            <div class="payment-option">
+                <h3 data-i18n="pay_per_post">Pay Per Post</h3>
+                <p data-i18n="pay_per_post_desc">Pay 50 ETB to post this property (one-time fee)</p>
+                <button id="pay-per-post-btn" data-i18n="pay_now" disabled>Pay Now</button>
+            </div>
+            <div class="payment-option">
+                <h3 data-i18n="monthly_subscription">Monthly Subscription</h3>
+                <p data-i18n="monthly_subscription_desc">Subscribe for 500 ETB/month and post unlimited properties</p>
+                <button id="subscribe-btn" data-i18n="subscribe_now" disabled>Subscribe Now</button>
+            </div>
+        </div>
+    </div>
+</div>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-storage-compat.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/property.js"></script>
+    <script src="js/language.js"></script>
+    <script src="js/payment.js"></script>
+    <script src="js/post-property.js"></script>
+</body>
+</html>

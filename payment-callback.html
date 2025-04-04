@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Callback</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="payment-callback-container">
+        <div class="payment-status-card">
+            <div id="payment-loader" class="loader">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Processing your payment...</p>
+            </div>
+            <div id="payment-success" class="hidden">
+                <i class="fas fa-check-circle success-icon"></i>
+                <h2>Payment Successful!</h2>
+                <p>Thank you for your payment. Your transaction has been completed.</p>
+                <div class="payment-details">
+                    <p><strong>Amount:</strong> <span id="payment-amount"></span></p>
+                    <p><strong>Transaction ID:</strong> <span id="transaction-id"></span></p>
+                    <p><strong>Date:</strong> <span id="payment-date"></span></p>
+                </div>
+                <button id="return-to-app" class="btn-primary">Return to App</button>
+            </div>
+            <div id="payment-failed" class="hidden">
+                <i class="fas fa-times-circle error-icon"></i>
+                <h2>Payment Failed</h2>
+                <p>We couldn't process your payment. Please try again.</p>
+                <div class="payment-actions">
+                    <button id="try-again" class="btn-primary">Try Again</button>
+                    <button id="cancel-payment" class="btn-secondary">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+    <script src="js/payment-callback.js"></script>
+</body>
+</html>
